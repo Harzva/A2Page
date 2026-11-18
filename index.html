@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A2Page turns agent output into pages you can open, interact with, and revise.">
+    <title>A2Page · Meeting follow-up</title>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./">A2Page</a>
+      <span class="topbar-context">Example workspace</span>
+      <a class="source" href="https://github.com/Harzva/A2Page">Source code ↗</a>
+    </header>
+    <main class="workspace">
+      <section class="document" aria-label="Page viewer">
+        <div class="empty" id="empty">
+          <p class="document-meta">Page library</p>
+          <h1>Meeting follow-up</h1>
+          <p id="library-message">Create a page from the conversation to see it here.</p>
+          <button id="library-open" type="button" hidden>Open latest version</button>
+        </div>
+        <article id="page" hidden>
+          <header class="document-header">
+            <p class="document-meta">Private to this browser <span aria-hidden="true">·</span> <span id="revision"></span></p>
+            <h1 id="page-title" tabindex="-1"></h1>
+            <button id="close-page" type="button">Close page</button>
+          </header>
+          <div id="surface"></div>
+        </article>
+      </section>
+      <aside class="conversation" aria-labelledby="chat-title">
+        <header class="conversation-header">
+          <h2 id="chat-title">Conversation</h2>
+          <p>Scripted demo · no model or API key</p>
+        </header>
+        <div class="messages">
+          <p class="speaker">You</p>
+          <p class="message">Turn the launch meeting into a follow-up page.</p>
+          <div id="reply" hidden>
+            <p class="speaker">Meeting Bot</p>
+            <p class="message">I saved the decisions and follow-ups as a page.</p>
+            <button class="page-link" id="chat-open" type="button">
+              <span id="card-title"></span>
+              <span id="card-state"></span>
+            </button>
+          </div>
+          <p id="notice" role="status"></p>
+        </div>
+        <form id="turn" class="turn">
+          <label for="request">Try an example request</label>
+          <select id="request" name="request" aria-describedby="demo-help" disabled>
+            <option value="create">Create a meeting follow-up page</option>
+            <option value="risks">Put launch risks first</option>
+            <option value="restore">Bring back the decisions-first view</option>
+          </select>
+          <button class="primary" id="send" type="submit" disabled>Send request</button>
+          <p id="demo-help">The checkbox changes your view, not the saved page.</p>
+        </form>
+      </aside>
+    </main>
+    <script type="module" src="/demo/main.js"></script>
+  </body>
+</html>

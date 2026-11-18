@@ -1,0 +1,10 @@
+# Integrating A2Page with Bot Studio
+
+A2Page is not bundled in Bot Studio yet. These are the proposed seams for a small desktop pilot; no existing executor or application data needs to be replaced.
+
+1. **Page records in the host.** Instantiate `createPageService` in the main process, with an adapter to host-owned storage that implements compare-and-set transactionally. Derive `workspaceId` and `threadId` from the authorized conversation; never trust values passed by an agent or renderer. Recheck access when the page opens or a revision commits.
+2. **Structured results, not HTML.** Expose host-scoped create and update operations to one opt-in Bot. Give it `pageCatalog.toJson()` and an example from `demo/sample.js`. Accept a draft shaped like `{ title, surface }`, not a URL or file path. Persist only after validation; send the chat a typed result referencing the committed page ID. Text-only external AG-UI support does not carry these page operations today.
+3. **Open alongside the original conversation.** Extend the task-delivery entry point with a typed page reference. Resolve it in the main process and pass the authorized record over a narrow IPC handler. Mount `a2page/renderer` in a dedicated pane next to chat. Never run agent-provided HTML or enable renderer-side Node access. Keep the host's CSP and existing trust boundaries.
+4. **Edit the same page.** When the user sends a revision request from the page pane, bind that turn to the open page ID and its current revision. A successful update changes the content, not the ID. On conflict, reload and let the user review before trying again. Local checkbox state never becomes a task mutation.
+
+Start with one meeting follow-up page. Accept the pilot only if a Bot can vary the component tree, the original card opens the latest saved revision after a restart, and a stale or out-of-scope update leaves the page unchanged. Apply a separate host permission and confirmation flow before adding actions such as writing tasks or publishing links.
